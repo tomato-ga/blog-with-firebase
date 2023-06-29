@@ -5,16 +5,25 @@ import Login from './components/Login';
 import Logout from './components/Logout';
 import CreatePost from './components/Createpost';
 import Navbar from './components/Navbar';
+import { useState } from 'react';
 
 function App() {
+  const [isAuth, setIsAuth] = useState(localStorage.getItem('isAuth'));
+
   return (
     <Router>
-      <Navbar />
+      <Navbar isAuth={isAuth} />
       <Routes>
         <Route path="/" element={<Home />}></Route>
-        <Route path="/createpost" element={<CreatePost />}></Route>
-        <Route path="/logout" element={<Logout />}></Route>
-        <Route path="/login" element={<Login />}></Route>
+        <Route
+          path="/createpost"
+          element={<CreatePost isAuth={isAuth} />}
+        ></Route>
+        <Route
+          path="/logout"
+          element={<Logout setIsAuth={setIsAuth} />}
+        ></Route>
+        <Route path="/login" element={<Login setIsAuth={setIsAuth} />}></Route>
       </Routes>
     </Router>
   );
